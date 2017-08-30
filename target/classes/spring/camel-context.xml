@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- Define a traditional camel context here -->
+
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+
+        <route id="testamq">
+            <from id="_from1" uri="activemq:demo.queue.1"/>
+            <log id="_log1" message="Received message:  ${body}"/>
+        </route>
+        <route id="processOrderRoute">
+            <from id="_from1" uri="activemq:incoming.order.queue"/>
+            <log id="log1" message="Done processing ${body}"/>
+            <choice id="choice1">
+                <when id="when1">
+                    <xpath id="_xpath1">/order/orderItems/orderItemPublisherName = 'ABC Company'</xpath>
+                    <log id="log2" message="Order for ABC Company"/>
+                    <to uri="activemq:companyabc.order.queue"/>
+                </when>
+                <when id="when2">
+                    <xpath id="_xpath2">/order/orderItems/orderItemPublisherName = 'Orly'</xpath>
+                    <log id="log3" message="Order for Orly"/>
+                    <to uri="activemq:orly.order.queue"/>
+                </when>
+                <otherwise id="otherwise1">
+                    <log id="log4" message="Others..."/>
+	                <to uri="activemq:others.order.queue"/>
+                </otherwise>
+            </choice>
+        </route>
+    </camelContext>
+    <bean class="org.apache.camel.component.jms.JmsConfiguration" id="jmsConfig">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="concurrentConsumers" value="10"/>
+    </bean>
+    <bean class="org.apache.activemq.camel.component.ActiveMQComponent" id="activemq">
+        <property name="configuration" ref="jmsConfig"/>
+    </bean>
+    <bean class="org.apache.activemq.ActiveMQConnectionFactory" id="connectionFactory">
+        <!-- <property name="brokerURL" value="tcp://172.30.13.131:61616"/> -->   
+		<property name="brokerURL" value="tcp://${BROKER_AMQ_TCP_SERVICE_HOST}:${BROKER_AMQ_TCP_SERVICE_PORT}"/>
+		<property name="userName" value="admin"/>
+        <property name="password" value="admin"/>
+    </bean>
+<!-- <bean id="propertyPlaceholder"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    <property name="locations">
+        <list>
+            <value>classpath:/props.properties</value>                           
+        </list>
+    </property> 
+</bean>-->
+</beans>

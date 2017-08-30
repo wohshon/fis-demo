@@ -1,0 +1,69 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  annotations:
+    fabric8.io/iconUrl: "img/icons/camel.svg"
+    fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
+  labels:
+    provider: "fabric8"
+    project: "fis-demo"
+    version: "1.0.0-SNAPSHOT"
+    group: "org.mycompany"
+  name: "fis-demo"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: "fis-demo"
+      provider: "fabric8"
+      group: "org.mycompany"
+  template:
+    metadata:
+      annotations:
+        fabric8.io/iconUrl: "img/icons/camel.svg"
+        fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
+      labels:
+        provider: "fabric8"
+        project: "fis-demo"
+        version: "1.0.0-SNAPSHOT"
+        group: "org.mycompany"
+    spec:
+      containers:
+      - env:
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
+        - name: "JAVA_APP_DIR"
+          value: "/deployments"
+        image: "fis-demo:latest"
+        imagePullPolicy: "Always"
+        livenessProbe:
+          httpGet:
+            path: "/health"
+            port: 8081
+          initialDelaySeconds: 180
+        name: "spring-boot"
+        ports:
+        - containerPort: 8080
+          name: "http"
+          protocol: "TCP"
+        - containerPort: 9779
+          name: "prometheus"
+          protocol: "TCP"
+        - containerPort: 8778
+          name: "jolokia"
+          protocol: "TCP"
+        readinessProbe:
+          httpGet:
+            path: "/health"
+            port: 8081
+          initialDelaySeconds: 10
+        resources:
+          limits:
+            cpu: "1.0"
+          requests:
+            cpu: "0.2"
+        securityContext:
+          privileged: false

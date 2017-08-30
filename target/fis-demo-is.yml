@@ -1,0 +1,15 @@
+---
+apiVersion: "v1"
+kind: "List"
+items:
+- apiVersion: "v1"
+  kind: "ImageStream"
+  metadata:
+    name: "fis-demo"
+  spec:
+    tags:
+    - from:
+        kind: "ImageStreamImage"
+        name: "fis-demo@sha256:6d1479fd9d612152bb58033a96f528fdcf161c88b157ce87eb31de4e0d0972f3"
+        namespace: "amq"
+      name: "latest"
