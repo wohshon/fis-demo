@@ -3,7 +3,9 @@ apiVersion: "extensions/v1beta1"
 kind: "Deployment"
 metadata:
   annotations:
+    fabric8.io/git-commit: "d9f91d49a56cb4d3335a5a544a8a933be254ddff"
     fabric8.io/iconUrl: "img/icons/camel.svg"
+    fabric8.io/git-branch: "master"
     fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
   labels:
     provider: "fabric8"
@@ -21,7 +23,9 @@ spec:
   template:
     metadata:
       annotations:
+        fabric8.io/git-commit: "d9f91d49a56cb4d3335a5a544a8a933be254ddff"
         fabric8.io/iconUrl: "img/icons/camel.svg"
+        fabric8.io/git-branch: "master"
         fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
       labels:
         provider: "fabric8"
@@ -35,10 +39,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: "metadata.namespace"
-        - name: "JAVA_APP_DIR"
-          value: "/deployments"
-        image: "fis-demo:latest"
-        imagePullPolicy: "Always"
+        image: "mycompany/fis-demo:snapshot-170908-120633-0529"
+        imagePullPolicy: "IfNotPresent"
         livenessProbe:
           httpGet:
             path: "/health"

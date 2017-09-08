@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:camel="http://camel.apache.org/schema/spring"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+      http://www.springframework.org/schema/context 
+      http://www.springframework.org/schema/context/spring-context-4.2.xsd
+      ">
     <!-- Define a traditional camel context here -->
-
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+    	<propertyPlaceholder location="props.properties" id="urls" />
+    	<!-- sample mqtt -->
+        <route id="mqtt">
+<!--             <from id="from_mqtt" uri="mqtt://dummy?tcp://{{AMQ.URL}}&amp;subscribeTopicName=test.mqtt.topic"/> 
+            <from id="from_mqtt" uri="mqtt://dummy?host=tcp://127.0.0.1:1883&amp;userName=admin&amp;password=admin&amp;subscribeTopicName=test.mqtt.topic"/>
+            <from id="from_mqtt" uri="mqtt://dummy?host=tcp://{{env:amq_mqtt_url}}&amp;userName=admin&amp;password=admin&amp;subscribeTopicName=test.mqtt.topic"/>
 
+-->
+            <from id="from_mqtt" uri="mqtt://dummy?host=tcp://{{amq.url.mqtt}}&amp;userName=admin&amp;password=admin&amp;subscribeTopicName=test.mqtt.topic"/>
+            <log id="_mqtt_log" message="Received mqtt message:  ${body}"/>
+        </route>
+            
         <route id="testamq">
             <from id="_from1" uri="activemq:demo.queue.1"/>
             <log id="_log1" message="Received message:  ${body}"/>
@@ -17,16 +33,16 @@
                 <when id="when1">
                     <xpath id="_xpath1">/order/orderItems/orderItemPublisherName = 'ABC Company'</xpath>
                     <log id="log2" message="Order for ABC Company"/>
-                    <to uri="activemq:companyabc.order.queue"/>
+                    <to id="_to1" uri="activemq:companyabc.order.queue"/>
                 </when>
                 <when id="when2">
                     <xpath id="_xpath2">/order/orderItems/orderItemPublisherName = 'Orly'</xpath>
                     <log id="log3" message="Order for Orly"/>
-                    <to uri="activemq:orly.order.queue"/>
+                    <to id="_to2" uri="activemq:orly.order.queue"/>
                 </when>
                 <otherwise id="otherwise1">
                     <log id="log4" message="Others..."/>
-	                <to uri="activemq:others.order.queue"/>
+                    <to id="_to3" uri="activemq:others.order.queue"/>
                 </otherwise>
             </choice>
         </route>
@@ -39,12 +55,14 @@
         <property name="configuration" ref="jmsConfig"/>
     </bean>
     <bean class="org.apache.activemq.ActiveMQConnectionFactory" id="connectionFactory">
-        <!-- <property name="brokerURL" value="tcp://172.30.13.131:61616"/> -->   
-		<property name="brokerURL" value="tcp://${BROKER_AMQ_TCP_SERVICE_HOST}:${BROKER_AMQ_TCP_SERVICE_PORT}"/>
-		<property name="userName" value="admin"/>
+        <!-- <property name="brokerURL" value="tcp://172.30.13.131:61616"/> -->
+        <!-- <property name="brokerURL" value="tcp://${BROKER_AMQ_TCP_SERVICE_HOST}:${BROKER_AMQ_TCP_SERVICE_PORT}"/>
+         -->
+         <property name="brokerURL" value="tcp://${amq.url}"/>
+        <property name="userName" value="admin"/>
         <property name="password" value="admin"/>
     </bean>
-<!-- <bean id="propertyPlaceholder"
+    <!-- <bean id="propertyPlaceholder"
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
     <property name="locations">
@@ -53,4 +71,5 @@
         </list>
     </property> 
 </bean>-->
+    <context:property-placeholder location="classpath*:props.properties"/>
 </beans>

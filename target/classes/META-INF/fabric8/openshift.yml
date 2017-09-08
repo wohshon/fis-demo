@@ -6,7 +6,9 @@ items:
   kind: "Service"
   metadata:
     annotations:
+      fabric8.io/git-commit: "d9f91d49a56cb4d3335a5a544a8a933be254ddff"
       fabric8.io/iconUrl: "img/icons/camel.svg"
+      fabric8.io/git-branch: "master"
     labels:
       expose: "true"
       provider: "fabric8"
@@ -28,7 +30,9 @@ items:
   kind: "DeploymentConfig"
   metadata:
     annotations:
+      fabric8.io/git-commit: "d9f91d49a56cb4d3335a5a544a8a933be254ddff"
       fabric8.io/iconUrl: "img/icons/camel.svg"
+      fabric8.io/git-branch: "master"
       fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
     labels:
       provider: "fabric8"
@@ -49,7 +53,9 @@ items:
     template:
       metadata:
         annotations:
+          fabric8.io/git-commit: "d9f91d49a56cb4d3335a5a544a8a933be254ddff"
           fabric8.io/iconUrl: "img/icons/camel.svg"
+          fabric8.io/git-branch: "master"
           fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
         labels:
           provider: "fabric8"
@@ -63,10 +69,8 @@ items:
             valueFrom:
               fieldRef:
                 fieldPath: "metadata.namespace"
-          - name: "JAVA_APP_DIR"
-            value: "/deployments"
-          image: "fis-demo:latest"
-          imagePullPolicy: "Always"
+          image: "mycompany/fis-demo:snapshot-170908-120633-0529"
+          imagePullPolicy: "IfNotPresent"
           livenessProbe:
             httpGet:
               path: "/health"
@@ -97,11 +101,3 @@ items:
             privileged: false
     triggers:
     - type: "ConfigChange"
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - "spring-boot"
-        from:
-          kind: "ImageStreamTag"
-          name: "fis-demo:latest"
-      type: "ImageChange"
