@@ -90,7 +90,7 @@ This client.ts file will be your client truststore
 
 1. Click on `Add to Project` at the top banner of the web console.
 
-2. On the service catalog page, search and select the image `amq63-ssl`
+2. On the service catalog page, search and select the image `amq63-ssl` (or `amq62-ssl)`
 
 3.
 
@@ -150,7 +150,7 @@ To connect externally to AMQ instance via a nodePort, a user with cluster-admin 
 
 1. Click on `Add to Project` at the top banner of the web console.
 
-2. On the service catalog page, search and select the image `amq63-basic`
+2. On the service catalog page, search and select the image `amq63-basic` (or `amq63-basic`)
 
 4. Fill up the form and click on `create`
 
