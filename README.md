@@ -25,7 +25,6 @@ This Demo consist of 3 main components:
 
 2. [Running the Client](#client)
 
-  work in progress...
 
 ### Deploying AMQ
 There are 2 options on the deployment of AMQ, depending on how messages are sent to the AMQ instance.
@@ -131,7 +130,7 @@ This client.ts file will be your client truststore
         weight: 100
       wildcardPolicy: None
 
-
+++++++++++++++++++END OF SECTION ++++++++++++++++++++++++
 
 
 ##### Sending messages via nodePort
@@ -198,6 +197,8 @@ Ensure that the `selector` value points to the amq pod to be connected to.
     `oc create -f <file>.yml`
 
 
+++++++++++++++++++END OF SECTION ++++++++++++++++++++++++
+
 
 ### Deploying FIS
 
@@ -234,6 +235,8 @@ If you have maven configured correctly, you can use the deploy using the fabric8
   `# mvn fabric8:deploy`
 
 2. It will take a whle for the binary deployment to complete.
+
+++++++++++++++++++END OF SECTION ++++++++++++++++++++++++
 
 
 ### Endpoints for connecting to AMQ
