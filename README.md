@@ -288,7 +288,8 @@ FIS instance listens to the following queue on the AMQ instance
 
 Test using client:
 
-```# java -cp amqclient.jar com.demo.activemq.client.MQTTClient tcp://54.179.188.119:30001 admin admin client123 "order.mqtt.topic "<order><orderId>1</orderId><orderItems><orderItemId>1</orderItemId><orderItemQty>1</orderItemQty><orderItemPublisherName>Orly</orderItemPublisherName><orderItemPrice>10.59</orderItemPrice></orderItems></order>" 
+```
+# java -cp amqclient.jar com.demo.activemq.client.MQTTClient tcp://54.179.188.119:30001 admin admin client123 "order.mqtt.topic "<order><orderId>1</orderId><orderItems><orderItemId>1</orderItemId><orderItemQty>1</orderItemQty><orderItemPublisherName>Orly</orderItemPublisherName><orderItemPrice>10.59</orderItemPrice></orderItems></order>" 
 
 Connecting to broker: tcp://54.179.188.119:30001
 Connected
