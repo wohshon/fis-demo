@@ -25,7 +25,7 @@ This Demo consist of 3 main components:
 
 2. [Running the Client](#client)
 
-  This is the integration component in the demo, it pulls messages from AMQ, do some basic filtering and route messages back to AMQ based on payload.
+  work in progress...
 
 ### Deploying AMQ
 There are 2 options on the deployment of AMQ, depending on how messages are sent to the AMQ instance.
