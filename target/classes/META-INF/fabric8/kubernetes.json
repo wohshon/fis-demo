@@ -6,7 +6,7 @@
     "kind" : "Service",
     "metadata" : {
       "annotations" : {
-        "fabric8.io/git-commit" : "d9f91d49a56cb4d3335a5a544a8a933be254ddff",
+        "fabric8.io/git-commit" : "0f4908cdf139b497679ad3a39cd0340308f74913",
         "fabric8.io/iconUrl" : "img/icons/camel.svg",
         "fabric8.io/git-branch" : "master"
       },
@@ -37,7 +37,7 @@
     "kind" : "Deployment",
     "metadata" : {
       "annotations" : {
-        "fabric8.io/git-commit" : "d9f91d49a56cb4d3335a5a544a8a933be254ddff",
+        "fabric8.io/git-commit" : "0f4908cdf139b497679ad3a39cd0340308f74913",
         "fabric8.io/iconUrl" : "img/icons/camel.svg",
         "fabric8.io/git-branch" : "master",
         "fabric8.io/metrics-path" : "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
@@ -62,7 +62,7 @@
       "template" : {
         "metadata" : {
           "annotations" : {
-            "fabric8.io/git-commit" : "d9f91d49a56cb4d3335a5a544a8a933be254ddff",
+            "fabric8.io/git-commit" : "0f4908cdf139b497679ad3a39cd0340308f74913",
             "fabric8.io/iconUrl" : "img/icons/camel.svg",
             "fabric8.io/git-branch" : "master",
             "fabric8.io/metrics-path" : "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
@@ -83,9 +83,12 @@
                   "fieldPath" : "metadata.namespace"
                 }
               }
+            }, {
+              "name" : "JAVA_APP_DIR",
+              "value" : "/deployments"
             } ],
-            "image" : "mycompany/fis-demo:snapshot-170908-120633-0529",
-            "imagePullPolicy" : "IfNotPresent",
+            "image" : "fis-demo:latest",
+            "imagePullPolicy" : "Always",
             "livenessProbe" : {
               "httpGet" : {
                 "path" : "/health",

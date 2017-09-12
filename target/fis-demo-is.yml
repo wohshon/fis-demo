@@ -10,6 +10,6 @@ items:
     tags:
     - from:
         kind: "ImageStreamImage"
-        name: "fis-demo@sha256:6d1479fd9d612152bb58033a96f528fdcf161c88b157ce87eb31de4e0d0972f3"
+        name: "fis-demo@sha256:360647e0f029e68813523ad5bf6d883d8f3c418e4a991db7e5ebe9895aff2f7a"
         namespace: "amq"
       name: "latest"

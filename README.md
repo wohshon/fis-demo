@@ -236,11 +236,7 @@ If you have maven configured correctly, you can use the deploy using the fabric8
 2. It will take a whle for the binary deployment to complete.
 
 
-### Client
-
-//TODO - client app
-
-1. Connecting to AMQ
+### Endpoints for connecting to AMQ
 
 - via route
 
@@ -250,11 +246,39 @@ endpoint: `https://<route>:443`
 
 endpoint: `http://<node ip of any node>:<exposed nodeport>`
 
+
+### Client
+
+JAVA based MQTT Test client, `amqclient.jar` provided in `client` directory
+
+Usage :
+
+	` java -cp amqclient.jar com.demo.activemq.client.MQTTClient <broker url: tcp://host:port> <username> <password> <client id> <topic name> <content>`
+
+
 #### Scenario 1 - echo message
 
 FIS instance listens to the following destinations on the AMQ instance and will echo messages received on the AMQ console log.
 - demo.queue.1 , over openwire
 - test.mqtt.topic, over mqtt
+
+Test using client:
+
+```# java -cp amqclient.jar com.demo.activemq.client.MQTTClient tcp://54.179.188.119:30001 admin admin client123 test.mqtt.topic "hello world"
+     Connecting to broker: tcp://54.179.188.119:30001
+     Connected
+     Publishing message: hello world
+     Message published
+     Disconnected
+
+
+```
+
+You should see an echo of the message in the FIS image console
+
+`16:21:35.598 [hawtdispatch-DEFAULT-2] INFO  mqtt - Received mqtt message:  hello world`
+
+If you inspect the web console of AMQ instance, you should see a new message count in under the enqueue and dequeue coloumn
 
 
 #### Scenario 2 - Message routing
@@ -262,7 +286,19 @@ FIS instance listens to the following destinations on the AMQ instance and will 
 FIS instance listens to the following queue on the AMQ instance
 - incoming.order.queue
 
-It route incoming messages based on the `orderItemPublisherName` element, and route it to different queues on the AMQ.
+Test using client:
+
+```# java -cp amqclient.jar com.demo.activemq.client.MQTTClient tcp://54.179.188.119:30001 admin admin client123 "order.mqtt.topic "<order><orderId>1</orderId><orderItems><orderItemId>1</orderItemId><orderItemQty>1</orderItemQty><orderItemPublisherName>Orly</orderItemPublisherName><orderItemPrice>10.59</orderItemPrice></orderItems></order>" 
+
+Connecting to broker: tcp://54.179.188.119:30001
+Connected
+Publishing message: <order><orderId>1</orderId><orderItems><orderItemId>1</orderItemId><orderItemQty>1</orderItemQty><orderItemPublisherName>Orly</orderItemPublisherName><orderItemPrice>10.59</orderItemPrice></orderItems></order>
+Message published
+Disconnected
+```
+
+The camel route inspects incoming messages based on the `orderItemPublisherName` element, and route it to different queues on the AMQ.
+
 
 Sample payload are :
 
