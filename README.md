@@ -204,9 +204,9 @@ Ensure that the `selector` value points to the amq pod to be connected to.
 
 This is the integration component, [Fuse Integration Service](https://access.redhat.com/documentation/en-us/red_hat_jboss_fuse/6.3/html-single/fuse_integration_services_2.0_for_openshift/), consist of a camel workload running in a spring boot runtime.
 
-The camel project is hosted on [github](https://github.com/wohshon/fis-demo)
+The camel project is hosted on [github](https://github.com/wohshon/fis-demo). Clone this to a local directory
 
-The camel project is wired to the AMQ instance deployed in the previous section.
+The camel project is wired to the AMQ instance deployed in the previous section using the project and application / service name as naming convention.
 
 **Note that the application name and project name of the AMQ instance must be specified as *broker* and *amq* respectively for the connection to work**
 
