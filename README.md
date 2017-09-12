@@ -240,16 +240,27 @@ If you have maven configured correctly, you can use the deploy using the fabric8
 
 //TODO - client app
 
+1. Connecting to AMQ
+
+- via route
+
+endpoint: `https://<route>:443`
+
+- via nodePort
+
+endpoint: `http://<node ip of any node>:<exposed nodeport>`
+
 #### Scenario 1 - echo message
 
-FIS instance listens to the following destinations on the AMQ instance and will echo messages received.
+FIS instance listens to the following destinations on the AMQ instance and will echo messages received on the AMQ console log.
 - demo.queue.1 , over openwire
 - test.mqtt.topic, over mqtt
+
 
 #### Scenario 2 - Message routing
 
 FIS instance listens to the following queue on the AMQ instance
-- ncoming.order.queue
+- incoming.order.queue
 
 It route incoming messages based on the `orderItemPublisherName` element, and route it to different queues on the AMQ.
 
