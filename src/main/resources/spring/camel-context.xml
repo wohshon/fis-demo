@@ -19,7 +19,7 @@
         <route id="mqtt_incoming_order">
             <from id="from_mqtt" uri="mqtt://dummy?host=tcp://{{amq.url.mqtt}}&amp;userName=admin&amp;password=admin&amp;subscribeTopicName=order.mqtt.topic"/>
             <log id="_mqtt_log_order" message="Received mqtt order message:  ${body}"/>
-             <to uri="direct:processOrder"/>
+            <to id="_to4" uri="direct:processOrder"/>
         </route>
         <route id="testamq">
             <from id="_from1" uri="activemq:demo.queue.1"/>
@@ -28,12 +28,11 @@
         <route id="processOrderRoute">
             <from id="_from1" uri="activemq:incoming.order.queue"/>
             <log id="log1" message="Prrocessing ${body}"/>
-            <to uri="direct:processOrder"/>
+            <to id="_to5" uri="direct:processOrder"/>
         </route>
-        
         <route id="routing_by_body">
-	        <from uri="direct:processOrder"/>
-            <log  message=">>>>>Received  ${body}"/>
+            <from id="_from2" uri="direct:processOrder"/>
+            <log id="_log2" message=">>>>>Received  ${body}"/>
             <choice id="choice1">
                 <when id="when1">
                     <xpath id="_xpath1">/order/orderItems/orderItemPublisherName = 'ABC Company'</xpath>
@@ -50,10 +49,7 @@
                     <to id="_to3" uri="activemq:others.order.queue"/>
                 </otherwise>
             </choice>
-        
-        
         </route>
-        
     </camelContext>
     <bean class="org.apache.camel.component.jms.JmsConfiguration" id="jmsConfig">
         <property name="connectionFactory" ref="connectionFactory"/>
