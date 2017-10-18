@@ -106,7 +106,7 @@ This client.ts file will be your client truststore
 | 8 |AMQ_TRUSTSTORE_PASSWORD  | password       |               |
 | 9 |AMQ_KEYSTORE         | server.keystore| refer to objects created previously |
 | 10|AMQ_KEYSTORE_PASSWORD  | password       |               |
-| 11|AMQ_MESH_DISCOVERY_TYPE| mesh           |               |
+| 11|AMQ_MESH_DISCOVERY_TYPE| kube           |               |
 | 12|AMQ_STORAGE_USAGE_LIMIT| 1-2G           | 1-2G sufficient for demo use cases|
 | 13|IMAGE_STREAM_NAMESPACE | openshift      |   default      |
 
@@ -161,7 +161,7 @@ To connect externally to AMQ instance via a nodePort, a user with cluster-admin 
 | 3 |MQ_TOPICS / MQ_QUEUES  | e.g. demo.topic   | Optional      |
 | 4 |MQ_USERNAME            | admin          |               |
 | 5 |MQ_PASSWORD            | admin          |               |
-| 6 |AMQ_MESH_DISCOVERY_TYPE| mesh           |               |
+| 6 |AMQ_MESH_DISCOVERY_TYPE| kube           |               |
 | 8 |AMQ_STORAGE_USAGE_LIMIT| 1-2G           | 1-2G sufficient for demo use cases|
 | 7 |IMAGE_STREAM_NAMESPACE | openshift      |   default      |
 
