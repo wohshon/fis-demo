@@ -6,7 +6,7 @@ items:
   kind: "Service"
   metadata:
     annotations:
-      fabric8.io/git-commit: "0f4908cdf139b497679ad3a39cd0340308f74913"
+      fabric8.io/git-commit: "cef586e0c5f08b431b05e8a0322d2c5e9354e461"
       fabric8.io/iconUrl: "img/icons/camel.svg"
       fabric8.io/git-branch: "master"
     labels:
@@ -30,7 +30,7 @@ items:
   kind: "Deployment"
   metadata:
     annotations:
-      fabric8.io/git-commit: "0f4908cdf139b497679ad3a39cd0340308f74913"
+      fabric8.io/git-commit: "cef586e0c5f08b431b05e8a0322d2c5e9354e461"
       fabric8.io/iconUrl: "img/icons/camel.svg"
       fabric8.io/git-branch: "master"
       fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
@@ -50,7 +50,7 @@ items:
     template:
       metadata:
         annotations:
-          fabric8.io/git-commit: "0f4908cdf139b497679ad3a39cd0340308f74913"
+          fabric8.io/git-commit: "cef586e0c5f08b431b05e8a0322d2c5e9354e461"
           fabric8.io/iconUrl: "img/icons/camel.svg"
           fabric8.io/git-branch: "master"
           fabric8.io/metrics-path: "dashboard/file/camel-routes.json/?var-project=fis-demo&var-version=1.0.0-SNAPSHOT"
@@ -66,10 +66,8 @@ items:
             valueFrom:
               fieldRef:
                 fieldPath: "metadata.namespace"
-          - name: "JAVA_APP_DIR"
-            value: "/deployments"
-          image: "fis-demo:latest"
-          imagePullPolicy: "Always"
+          image: "mycompany/fis-demo:snapshot-171018-142824-0078"
+          imagePullPolicy: "IfNotPresent"
           livenessProbe:
             httpGet:
               path: "/health"
